@@ -1,0 +1,77 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.env/
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment variables
+*.env
+.env.*
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# Mac
+.DS_Store
+
+# Database / Logs
+*.log
+*.db
+*.sqlite3
+*.pkl
+*.mldb
+
+# Flask cache
+instance/
+*.pid
+
+# Beanie/MongoDB dump data
+dump/
+data/
+*.bson
+*.metadata.json
+
+# Test cache
+.coverage
+htmlcov/
+.tox/
+.nox/
+pytest_cache/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# mypy / pyright
+.mypy_cache/
+.pyright/
+
+# PyInstaller
+dist/
+build/
+*.spec
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Coverage reports
+coverage.xml
+.cache/
+
+# Editable installs
+*.egg-info/
+.eggs/
+
+# Others
+*.swp
