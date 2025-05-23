@@ -12,6 +12,3 @@ class Config:
     # Endereço para o banco de dados
     MONGODB_DATABASE_URI = 'mongodb://localhost:27017'
     DATABASE_NAME = "server-side-api"
-    
-    # Ativa ou desativa log das modificações
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
