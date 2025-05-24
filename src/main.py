@@ -3,6 +3,7 @@ from fastapi import FastAPI
 
 from api.controllers import home
 from api.controllers import users
+from api.controllers import auth
 
 from api.database.database import DataBase
 
@@ -21,3 +22,4 @@ async def startup():
     # Add the routes to application
     app.include_router(home.router)
     app.include_router(users.router)
+    app.include_router(auth.router)

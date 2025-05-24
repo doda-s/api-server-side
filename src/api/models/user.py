@@ -1,8 +1,8 @@
-from beanie import Document
+from beanie import Document, Indexed
 
 # Modelo de usuário de exemplo
 class User(Document):
-    username: str
+    username: Indexed(str, unique=True)
     password: str
     
     class Settings:
