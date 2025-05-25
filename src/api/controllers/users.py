@@ -1,11 +1,18 @@
 # Modelo de controller de usuários
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
+
+from typing_extensions import Annotated
+
+from api.dto.user_dto import UserDto
+from api.middleware.authentication import get_current_user
+
+
 
 router = APIRouter()
 
-# exemplo de end point com parâmetro
-@router.get("/user/{username}")
-async def get_user_by_name(username: str):
-    return {"message": f"Hello, {username}!"}
-
+@router.get("/users/me", response_model=UserDto)
+async def read_current_user(
+    current_user: Annotated[UserDto, Depends(get_current_user)]
+):
+    return current_user
