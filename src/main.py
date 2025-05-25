@@ -8,6 +8,7 @@ from api.controllers import auth
 from api.database.database import DataBase
 
 from api.models.user import User
+from api.models.character import Character
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ async def startup():
     database = DataBase()
     database.MODELS = [
         User,
+        Character,
     ]
     await database.init()
     
