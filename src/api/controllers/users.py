@@ -56,3 +56,9 @@ async def update_current_user_progress(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Não foi possível atualizar o progresso do usuário.",
         )
+
+@router.delete("/users/me/delete")
+async def delete_user(
+    current_user: Annotated[UserDto, Depends(token_required)]    
+):
+    return await user_service.delete_user(current_user)

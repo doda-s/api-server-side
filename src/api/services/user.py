@@ -68,3 +68,10 @@ async def update_user_progress(username: str, progress_dto: ProgressDto):
     )
     await user.replace()
     return UserDto(**user.model_dump())
+
+async def delete_user(current_user: UserDto):
+    user = await User.find_one(User.username == current_user.username)
+    if not user:
+        return
+    await user.delete()
+    return {"message": "Usuário deletado com sucesso!"}
