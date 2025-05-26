@@ -36,3 +36,9 @@ async def delete_npc(
     uuid: str
 ):
     return await npcs.delete_npc(uuid)
+
+@router.post("/npcs/select/{uuid}")
+async def select_npc(
+    uuid
+):
+    return await npcs.select_npc(uuid) 

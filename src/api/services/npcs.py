@@ -40,3 +40,9 @@ async def delete_npc(uuid):
         return {"message": "NPC não encontrado."}
     await npc.delete()
     return {"message": "NPC deletado com sucesso!"}
+
+async def select_npc(uuid):
+    npc = await Npc.get(uuid)
+    if not npc:
+        return {"message": "NPC não encontrado."}
+    return NpcDto(**npc.model_dump())
