@@ -8,6 +8,7 @@ from api.dto.character_dto import CharacterDto
 from api.models.user import User
 from api.models.character import Character
 from api.models.progress import Progress
+from api.dto.progress_dto import ProgressDto
 
 from typing_extensions import Annotated
 
@@ -55,3 +56,22 @@ async def get_user_character(user_dto: UserDto):
     if not user:
         return None
     return CharacterDto(**user.character.model_dump())
+
+async def update_user_progress(username: str, progress_dto: ProgressDto):
+    user = await User.find_one(User.username == username)
+    if not user:
+        return {"message": "Usuário não encontrado."}
+    user.progress = Progress(
+        trust= progress_dto.trust,
+        number_of_cases_won= progress_dto.number_of_cases_won,
+        number_of_lost_cases= progress_dto.number_of_lost_cases,
+    )
+    await user.replace()
+    return UserDto(**user.model_dump())
+
+async def delete_user(current_user: UserDto):
+    user = await User.find_one(User.username == current_user.username)
+    if not user:
+        return
+    await user.delete()
+    return {"message": "Usuário deletado com sucesso!"}
