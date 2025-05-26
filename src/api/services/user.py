@@ -7,13 +7,15 @@ from api.dto.character_dto import CharacterDto
 from api.dto.character_dto import CharacterDto
 from api.models.user import User
 from api.models.character import Character
+from api.models.progress import Progress
 
 from typing_extensions import Annotated
 
 async def create_user(username: str, password: str):
     user = User(
         username=username,
-        password=password
+        password=password,
+        progress=Progress()
     )
     
     try:
