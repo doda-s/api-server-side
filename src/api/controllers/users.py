@@ -9,6 +9,7 @@ from typing_extensions import Annotated
 
 from api.dto.user_dto import UserDto
 from api.dto.character_dto import CharacterDto
+from api.dto.progress_dto import ProgressDto
 from api.middleware.authentication import token_required
 
 from api.services import user as user_service
@@ -39,3 +40,19 @@ async def user_character(
     current_user: Annotated[UserDto, Depends(token_required)]    
 ):
     return await user_service.get_user_character(current_user)
+
+@router.post("/users/me/progress/update")
+async def update_current_user_progress(
+    progress_dto: ProgressDto,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    try:
+        return await user_service.update_user_progress(
+            current_user.username,
+            progress_dto
+        )
+    except DocumentNotFound:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Não foi possível atualizar o progresso do usuário.",
+        )
