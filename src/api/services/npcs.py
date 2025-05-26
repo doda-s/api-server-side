@@ -33,3 +33,10 @@ async def update_npc(uuid: str, new_character: CharacterDto):
     npc.character = character
     await npc.replace()
     return NpcDto(**npc.model_dump())
+
+async def delete_npc(uuid):
+    npc = await Npc.get(uuid)
+    if not npc:
+        return {"message": "NPC não encontrado."}
+    await npc.delete()
+    return {"message": "NPC deletado com sucesso!"}

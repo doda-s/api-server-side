@@ -30,3 +30,9 @@ async def update_npc(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Não foi possível atualizar NPC.",
         )
+
+@router.delete("/npcs/delete/{uuid}")
+async def delete_npc(
+    uuid: str
+):
+    return await npcs.delete_npc(uuid)
