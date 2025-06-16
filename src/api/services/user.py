@@ -9,6 +9,7 @@ from api.models.user import User
 from api.models.character import Character
 from api.models.progress import Progress
 from api.dto.progress_dto import ProgressDto
+from api.types.role_names import RoleNames
 
 from typing_extensions import Annotated
 
@@ -16,6 +17,7 @@ async def create_user(username: str, password: str):
     user = User(
         username=username,
         password=password,
+        roles=[RoleNames.DEFAULT],
         progress=Progress()
     )
     
