@@ -20,7 +20,7 @@ class User(Document):
     password: str
     progress: Progress
     character: Optional[Character] = None
-    achievements: Optional[Achievements] = None
+    achievements: list[str] = []
 
     class Settings:
         name = "users"

@@ -1,4 +1,5 @@
-from fastapi import Depends
+from fastapi import Depends, status
+from fastapi.exceptions import HTTPException
 
 from pymongo.errors import DuplicateKeyError
 
@@ -8,6 +9,7 @@ from api.dto.character_dto import CharacterDto
 from api.models.user import User
 from api.models.character import Character
 from api.models.progress import Progress
+from api.models.achievements import Achievements
 from api.dto.progress_dto import ProgressDto
 from api.types.role_names import RoleNames
 
@@ -77,3 +79,25 @@ async def delete_user(current_user: UserDto):
         return
     await user.delete()
     return {"message": "Usuário deletado com sucesso!"}
+
+async def add_achievement_to_user(
+    username: str,
+    achievement_id: str
+):  
+    user = await User.find_one(User.username == username)
+    achievement = await Achievements.get(achievement_id)
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuário não encontrado!"
+        )
+    if not achievement:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Conquista inválida!"
+        )
+    
+    user.achievements.append(str(achievement_id))
+    await user.save()
+    
+    return {"message": "Achievement adicionado com sucesso!"}
