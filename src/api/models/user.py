@@ -10,9 +10,12 @@ from api.models.achievements import Achievements
 
 from uuid import uuid4, UUID
 
+from api.types.role_names import RoleNames
+
 # Modelo de usuário de exemplo
 class User(Document):
     id: UUID = Field(default_factory=uuid4)
+    roles: list[RoleNames]
     username: Indexed(str, unique=True)
     password: str
     progress: Progress
