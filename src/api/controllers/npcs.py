@@ -5,6 +5,7 @@ from api.middleware.authentication import token_required
 
 from beanie.exceptions import DocumentNotFound
 
+
 from fastapi import APIRouter, Depends, status
 from fastapi.exceptions import HTTPException
 

@@ -6,6 +6,7 @@ from pydantic import Field
 
 from api.models.character import Character
 from api.models.progress import Progress
+from api.models.achievements import Achievements
 
 from uuid import uuid4, UUID
 
@@ -19,6 +20,7 @@ class User(Document):
     password: str
     progress: Progress
     character: Optional[Character] = None
-    
+    achievements: Optional[Achievements] = None
+
     class Settings:
         name = "users"
