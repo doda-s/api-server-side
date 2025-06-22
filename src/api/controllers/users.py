@@ -62,3 +62,13 @@ async def delete_user(
     current_user: Annotated[UserDto, Depends(token_required)]    
 ):
     return await user_service.delete_user(current_user)
+
+@router.put("/users/me/achievements/add/{achievement_id}")
+async def add_achievement_to_user(
+    achievement_id: str,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    return await user_service.add_achievement_to_user(
+        username=current_user.username,
+        achievement_id=achievement_id
+    )
