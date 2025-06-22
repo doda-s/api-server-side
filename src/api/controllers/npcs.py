@@ -3,7 +3,7 @@ from api.services import npcs
 
 from beanie.exceptions import DocumentNotFound
 
-from fastapi import APIRouter
+from fastapi import status, APIRouter
 from fastapi.exceptions import HTTPException
 
 router = APIRouter()
