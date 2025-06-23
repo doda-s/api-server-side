@@ -14,7 +14,7 @@ from api.dto.character_dto import CharacterDto
 from api.models.user import User
 from api.models.character import Character
 from api.models.progress import Progress
-from api.models.achievements import Achievements
+from api.models.achievement import Achievement
 from api.dto.progress_dto import ProgressDto
 from api.types.role_names import RoleNames
 
@@ -116,7 +116,7 @@ async def add_achievement_to_user(
     achievement_id: str
 ):  
     user = await User.find_one(User.username == username)
-    achievement = await Achievements.get(achievement_id)
+    achievement = await Achievement.get(achievement_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,

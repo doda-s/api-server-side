@@ -1,4 +1,4 @@
-from api.models.achievements import Achievements
+from api.models.achievement import Achievement
 from api.models.user import User
 from api.dto.achievement_count_dto import AchievementCountDto
 from api.dto.achievement_percentage_dto import AchievementPercentageDto
@@ -44,7 +44,7 @@ async def get_achievements_global_count():
     return achievement_stat_dto_list
 
 async def get_global_achievements_stats_count():
-    all_achievements = await Achievements.find_all().to_list()
+    all_achievements = await Achievement.find_all().to_list()
     achievements_ids = [a.id for a in all_achievements]
     achievements_count = await get_chievements_count_by_user()
     achievement_stat_dto_list = []

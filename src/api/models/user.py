@@ -6,7 +6,6 @@ from pydantic import Field
 
 from api.models.character import Character
 from api.models.progress import Progress
-from api.models.achievements import Achievements
 
 from uuid import uuid4, UUID
 
