@@ -1,5 +1,6 @@
 from api.middleware.authentication import token_required
 from api.dto.achievements_dto import AchievementsDto
+from api.dto.user_dto import UserDto
 from api.services import achievements as achievements_services
 
 from typing_extensions import Annotated
@@ -23,14 +24,27 @@ async def get_achievements(uuid: str):
 
 # Create achievements
 @router.post("/achievements/create")
-async def create_achievements(achievements_dto: AchievementsDto):
-    return await achievements_services.create_achievements(achievements_dto)
+async def create_achievements(
+    achievements_dto: AchievementsDto,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    return await achievements_services.create_achievements(
+        achievements_dto,
+        current_user
+    )
 
 # Update achievements
-@router.post("/achievements/update/{uuid}")
-async def update_achievements(achievements_dto: AchievementsDto, uuid):
+@router.put("/achievements/update/{uuid}")
+async def update_achievements(
+    achievements_dto: AchievementsDto, uuid,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
     try:
-        return await achievements_services.update_achievents(uuid, achievements_dto)
+        return await achievements_services.update_achievents(
+            uuid,
+            achievements_dto,
+            current_user
+        )
     except DocumentNotFound:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
@@ -39,5 +53,8 @@ async def update_achievements(achievements_dto: AchievementsDto, uuid):
 
 # Delete achievements
 @router.delete("/achievements/delete/{uuid}")
-async def delete_achievements(uuid: str):
-    return await achievements_services.delete_achievements(uuid)
+async def delete_achievements(
+    uuid: str,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    return await achievements_services.delete_achievements(uuid, current_user)
