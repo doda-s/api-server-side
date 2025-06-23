@@ -62,3 +62,17 @@ async def delete_user(
     current_user: Annotated[UserDto, Depends(token_required)]    
 ):
     return await user_service.delete_user(current_user)
+
+
+@router.get("/users/me/titles")
+async def get_user_titles(
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    return await user_service.get_user_titles(current_user)
+
+@router.post("/users/me/titles/add/{title_id}")
+async def add_user_titles(
+    current_user: Annotated[UserDto, Depends(token_required)],
+    title_id: str
+):
+    return await user_service.add_user_titles(current_user,title_id)

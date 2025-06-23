@@ -1,7 +1,8 @@
 from pydantic import BaseModel
 
-from typing import Optional
+from typing import Optional, List
 
+from api.dto.title_dto import TitleDto
 from api.dto.character_dto import CharacterDto
 from api.dto.progress_dto import ProgressDto
 
@@ -13,3 +14,4 @@ class UserDto(BaseModel):
     username: str
     progress: ProgressDto
     character: Optional[CharacterDto] = None
+    titles: List[TitleDto] = []
