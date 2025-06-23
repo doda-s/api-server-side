@@ -21,7 +21,7 @@ class User(Document):
     password: str
     progress: Progress
     character: Optional[Character] = None
-    achievements: Optional[Achievements] = None
+    achievements: list[str] = []
     titles: Optional[List[Title]] = Field(default_factory=list)
 
     class Settings:

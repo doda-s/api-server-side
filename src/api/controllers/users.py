@@ -63,7 +63,6 @@ async def delete_user(
 ):
     return await user_service.delete_user(current_user)
 
-
 @router.get("/users/me/titles")
 async def get_user_titles(
     current_user: Annotated[UserDto, Depends(token_required)]
@@ -76,3 +75,13 @@ async def add_user_titles(
     title_id: str
 ):
     return await user_service.add_user_titles(current_user,title_id)
+
+@router.put("/users/me/achievements/add/{achievement_id}")
+async def add_achievement_to_user(
+    achievement_id: str,
+    current_user: Annotated[UserDto, Depends(token_required)]
+):
+    return await user_service.add_achievement_to_user(
+        username=current_user.username,
+        achievement_id=achievement_id
+    )
