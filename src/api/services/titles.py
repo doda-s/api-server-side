@@ -28,20 +28,10 @@ async def add_title(current_user: UserDto, title_dto: TitleDto):
         return {"message": "Não foi possível criar o título!"}
     
 async def get_all_titles(current_user: UserDto):
-    if not await check_if_has_role(current_user, RoleNames.ADMIN):
-        raise HTTPException(
-            status_code = status.HTTP_403_FORBIDDEN,
-            detail = "Sem permissão!"
-            )
     titles = await Title.find_all().to_list()
     return titles
 
 async def get_title_by_id(current_user: UserDto, id):
-    if not await check_if_has_role(current_user, RoleNames.ADMIN):
-        raise HTTPException(
-            status_code = status.HTTP_403_FORBIDDEN,
-            detail = "Sem permissão!"
-            )
     if not validate_title(id): raise HTTPException(status_code=404, detail="Título não encontrado")
     title = await Title.get(id)
     return TitleDto(**title.model_dump())
