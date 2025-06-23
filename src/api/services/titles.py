@@ -42,8 +42,26 @@ async def get_title_by_id(current_user: UserDto, id):
             status_code = status.HTTP_403_FORBIDDEN,
             detail = "Sem permissão!"
             )
+    if not validate_title(id): raise HTTPException(status_code=404, detail="Título não encontrado")
+    title = await Title.get(id)
+    return TitleDto(**title.model_dump())
+
+async def validate_title(id)->bool:
     try:
         title = await Title.get(id)
     except:
-        return {"message": "Título não encontrado"} 
-    return TitleDto(**title.model_dump())
+        return False
+    return True
+
+async def get_user_titles_name_description(current_user: UserDto, titles: list):
+    titles_data = []
+    for title in titles:
+        try:
+            result = await get_title_by_id(current_user, title)
+        except:
+            continue
+        titles_data.append({
+            "title": result.title,
+            "description": result.description
+            })
+    return titles_data

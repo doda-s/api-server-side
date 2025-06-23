@@ -5,6 +5,8 @@ from pymongo.errors import DuplicateKeyError
 
 from fastapi.exceptions import HTTPException
 
+from api.services.titles import validate_title, get_user_titles_name_description
+
 from api.models.title import Title
 from api.dto.user_dto import UserDto
 from api.dto.character_dto import CharacterDto
@@ -88,19 +90,16 @@ async def get_user_titles(current_user: UserDto):
     user = await User.find_one(User.username == current_user.username)
     if not user or not user.titles:
         return {"message": "Nenhum título encontrado!"}
-    return user.titles
+    return await get_user_titles_name_description(current_user, user.titles)
 
 async def add_user_titles(current_user: UserDto, title_id: str):
     user = await User.find_one(User.username == current_user.username)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
-    try:
-        title = await Title.get(title_id)
-    except:
-        raise HTTPException(status_code=404, detail="Título não encontrado")
-    user.titles.append(title)
-    if Title.find(title in user.titles):
-        return {"message": "O usuário já possiu este título!"}
+    if await validate_title(id): return {"message": "Título não encontrado"}
+    if title_id in user.titles:
+        return {"message": "O usuário já possui este título!"}
+    user.titles.append(title_id)
     try:
         await user.save()
     except Exception as e:
