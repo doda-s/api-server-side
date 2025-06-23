@@ -14,4 +14,5 @@ class UserDto(BaseModel):
     username: str
     progress: ProgressDto
     character: Optional[CharacterDto] = None
-    titles: List[TitleDto] = []
+    achievements: list[str] = []
+    titles: list[str] = []
