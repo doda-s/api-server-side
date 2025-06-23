@@ -1,5 +1,5 @@
 from pydantic import BaseModel
 
-class AchievementsDto(BaseModel):
+class AchievementDto(BaseModel):
     name: str
     description: str

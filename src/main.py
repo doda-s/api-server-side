@@ -14,7 +14,7 @@ from api.database.database import DataBase
 from api.models.user import User
 from api.models.character import Character
 from api.models.npc import Npc
-from api.models.achievements import Achievements
+from api.models.achievement import Achievement
 from api.models.title import Title
 
 app = FastAPI()
@@ -25,7 +25,7 @@ async def startup():
     database.MODELS = [
         User,
         Npc,
-        Achievements,
+        Achievement,
         Title,
     ]
     await database.init()

@@ -14,7 +14,7 @@ from api.dto.character_dto import CharacterDto
 from api.models.user import User
 from api.models.character import Character
 from api.models.progress import Progress
-from api.models.achievements import Achievements
+from api.models.achievement import Achievement
 from api.dto.progress_dto import ProgressDto
 from api.types.role_names import RoleNames
 
@@ -115,8 +115,9 @@ async def add_achievement_to_user(
     username: str,
     achievement_id: str
 ):  
+    #TODO adicionar verificação de duplicidade de achievement
     user = await User.find_one(User.username == username)
-    achievement = await Achievements.get(achievement_id)
+    achievement = await Achievement.get(achievement_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -128,7 +129,11 @@ async def add_achievement_to_user(
             detail="Conquista inválida!"
         )
     
-    user.achievements.append(str(achievement_id))
-    await user.save()
+    if not str(achievement_id) in user.achievements: 
+        user.achievements.append(str(achievement_id))
+        await user.save()
+        return {"message": "Achievement adicionado com sucesso!"}
     
-    return {"message": "Achievement adicionado com sucesso!"}
+    return {
+        "message": "O usuário já possui o achievement informado."
+    }

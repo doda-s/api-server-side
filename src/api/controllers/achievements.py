@@ -1,5 +1,5 @@
 from api.middleware.authentication import token_required
-from api.dto.achievements_dto import AchievementsDto
+from api.dto.achievement_dto import AchievementDto
 from api.dto.user_dto import UserDto
 from api.services import achievements as achievements_services
 
@@ -18,14 +18,14 @@ async def get_all_achievements():
     return await achievements_services.get_all_achievements()
 
 # Select achievements by uuid
-@router.get("/achievements/select/{uuid}", response_model=AchievementsDto)
+@router.get("/achievements/select/{uuid}", response_model=AchievementDto)
 async def get_achievements(uuid: str):
     return await achievements_services.get_achievements(uuid)
 
 # Create achievements
 @router.post("/achievements/create")
 async def create_achievements(
-    achievements_dto: AchievementsDto,
+    achievements_dto: AchievementDto,
     current_user: Annotated[UserDto, Depends(token_required)]
 ):
     return await achievements_services.create_achievements(
@@ -36,7 +36,7 @@ async def create_achievements(
 # Update achievements
 @router.put("/achievements/update/{uuid}")
 async def update_achievements(
-    achievements_dto: AchievementsDto, uuid,
+    achievements_dto: AchievementDto, uuid,
     current_user: Annotated[UserDto, Depends(token_required)]
 ):
     try:
