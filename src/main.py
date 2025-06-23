@@ -7,6 +7,7 @@ from api.controllers.auth import router as auth_router
 from api.controllers.npcs import router as npcs_router
 from api.controllers.achievements import router as achievement_router
 from api.controllers.titles import router as titles_router
+from api.controllers.global_stats import router as global_stats_router
 
 from api.database.database import DataBase
 
@@ -36,3 +37,4 @@ async def startup():
     app.include_router(npcs_router)
     app.include_router(achievement_router)
     app.include_router(titles_router)
+    app.include_router(global_stats_router)
