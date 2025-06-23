@@ -93,6 +93,11 @@ async def get_user_titles(current_user: UserDto):
     return await get_user_titles_name_description(current_user, user.titles)
 
 async def add_user_titles(current_user: UserDto, title_id: str):
+    if not await check_if_has_role(current_user, RoleNames.ADMIN):
+        raise HTTPException(
+            status_code = status.HTTP_403_FORBIDDEN,
+            detail = "Sem permissão!"
+            )
     user = await User.find_one(User.username == current_user.username)
     if not user:
         raise HTTPException(status_code=404, detail="Usuário não encontrado")
