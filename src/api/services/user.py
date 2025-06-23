@@ -115,6 +115,7 @@ async def add_achievement_to_user(
     username: str,
     achievement_id: str
 ):  
+    #TODO adicionar verificação de duplicidade de achievement
     user = await User.find_one(User.username == username)
     achievement = await Achievement.get(achievement_id)
     if not user:

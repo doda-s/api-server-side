@@ -61,7 +61,7 @@ async def update_achievents(
         achievement.name = achievements_new.name
         achievement.description = achievements_new.description
         await achievement.replace()
-        return AchievementsDto(**achievement.model_dump())
+        return AchievementDto(**achievement.model_dump())
     
     raise HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
