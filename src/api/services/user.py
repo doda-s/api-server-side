@@ -129,7 +129,11 @@ async def add_achievement_to_user(
             detail="Conquista inválida!"
         )
     
-    user.achievements.append(str(achievement_id))
-    await user.save()
+    if not str(achievement_id) in user.achievements: 
+        user.achievements.append(str(achievement_id))
+        await user.save()
+        return {"message": "Achievement adicionado com sucesso!"}
     
-    return {"message": "Achievement adicionado com sucesso!"}
+    return {
+        "message": "O usuário já possui o achievement informado."
+    }
